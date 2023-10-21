@@ -15,20 +15,14 @@ class Particle {
       fill(200, 0, 50);
     }
 
-    noStroke();
+ 
     ellipse(x, y, r*2, r*2);
   }
   
   
   void update() {
-    //if (!onBounds()) {
-    //  //reset();
-    //  x = 0;
-    //  y = 0;
-    //}
+
     onBounds();
-
-
     x +=vx;
     y +=vy;
     colliding = false;
@@ -51,17 +45,16 @@ class Particle {
     } else if (y > height  + r*3 ) {
       y = -r;
     }
-    //float buf = r*4;
-    //return  (x > r-buf && x < width - r + buf  ) && ( y > r - buf && y < height - r +buf);
+
   }
 
   void reset() {
     colliding = false;
 
-    x = random(0, width);//width/2 + random(-10,10);
-    y = random(0, height);//height/2 + random(-10,10);
+    x = random(0, width);
+    y = random(0, height);
     vx = random(-3, 3);
     vy = random(-3, 3);
-    r =random(2, 5);
+    r =1;//random(2, 5);
   }
 }

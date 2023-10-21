@@ -8,29 +8,26 @@ class AABB {
     h = _h;
   }
   void display() {
-    rectMode(CENTER);
-
-
     rect(x, y, w*2-1, h*2-1);
   }
   Boolean intersect(Particle other) {
 
     return !(x + w < other.x -other.w || x - w > other.x + other.w || y + h < other.y -other.h || y - h > other.y + other.h );
   }
-  Boolean contain(Node n) {
+  Boolean contain(Particle n) {
     return n.x >= x - w  && n.x <= x+w && n.y >= y - h&& n.y <= y + h;
   }
 }
 
-class Node {
-  float x, y;
-  Particle data;
-  Node(float _x, float _y, Particle _data ) {
-    x =_x;
-    y = _y;
-    data = _data;
-  }
-}
+//class Particle {
+//  float x, y;
+//  Particle data;
+//  Particle(float _x, float _y, Particle _data ) {
+//    x =_x;
+//    y = _y;
+//    data = _data;
+//  }
+//}
 
 
 class QuadTree {
@@ -39,7 +36,7 @@ class QuadTree {
   // Bounding box of Tree
   AABB bound;
   // Array of Node it contains
-  ArrayList<Node> nlist;
+  ArrayList<Particle> nlist;
   // Whether tree is divided into leaves;
   Boolean divided;
 
@@ -49,12 +46,12 @@ class QuadTree {
     bound = _bound;
     cap = _cap;
 
-    nlist = new ArrayList<Node>();
+    nlist = new ArrayList<Particle>();
     divided = false;
     //subdivide();
   }
-  ArrayList<Node> query(Particle range, ArrayList<Node> r) {
-    ArrayList<Node> result = r;
+  ArrayList<Particle> query(Particle range, ArrayList<Particle> r) {
+    ArrayList<Particle> result = r;
     // If intersets bound
     if (!bound.intersect(range)) {
       return result;
@@ -71,7 +68,7 @@ class QuadTree {
     return result;
   }
 
-  Boolean insert(Node n) {
+  Boolean insert(Particle n) {
     Boolean result = false;
     // If not inside bounds
     if (!bound.contain(n)) {
@@ -130,7 +127,7 @@ class QuadTree {
     }
   }
   void clear() {
-    nlist = new ArrayList<Node>();
+    nlist = new ArrayList<Particle>();
     nw = ne = sw = se = null;
     divided = false;
   }

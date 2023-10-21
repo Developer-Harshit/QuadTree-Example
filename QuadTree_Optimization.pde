@@ -1,14 +1,14 @@
 
-Particle[] plist =new  Particle[5000];
+Particle[] plist = new  Particle[5000];
 QuadTree qt;
 void setup() {
-  size(1080, 720);
+  size(720, 720);
 
   textSize(20);
   strokeWeight(2);
   rectMode(CENTER);
   fill(255);
-  qt = new QuadTree(new AABB(width/2, height/2, width/2, height/2), 2);
+  qt = new QuadTree(new AABB(width/2, height/2, width/2, height/2), 5);
 
   for (int i = 0; i<plist.length; i++ ) {
 
@@ -21,10 +21,11 @@ void draw() {
   // Clearing Quad tree
   qt.clear();
   // Displaying and updating
+  noStroke();
   for (Particle p : plist) {
     p.display();
     p.update();
-    qt.insert(new Node(p.x, p.y, p));
+    qt.insert(p);
   }
 
   // Checking collision - with quadtree
@@ -35,11 +36,11 @@ void draw() {
       continue;
     }
 
-    ArrayList<Node> nodes = qt.query(p1, new ArrayList<Node>());
+    ArrayList<Particle> pars = qt.query(p1, new ArrayList<Particle>());
 
-    for (Node n : nodes) {
+    for (Particle p2 : pars) {
 
-      Particle p2 = n.data;
+   
       if (p1 == p2) {
         continue;
       }
@@ -96,14 +97,3 @@ void collisionCheck() {
     }
   }
 }
-
-  // Without qt
-  // 5000   - 20fps
-  // 10000  - 8.4fps
-  // 50000  - 1fps
-  // 100000 - less than 1fps
-  // With qt
-  // 5000   - 32.5fps
-  // 10000  - 17.4fps
-  // 50000  - 3fps
-  // 100000 - 1.82fps
