@@ -1,5 +1,6 @@
+import java.util.Set; ;
 
-Particle[] plist = new  Particle[5000];
+Particle[] plist = new  Particle[10000];
 QuadTree qt;
 void setup() {
   size(720, 720);
@@ -8,7 +9,7 @@ void setup() {
   strokeWeight(2);
   rectMode(CENTER);
   fill(255);
-  qt = new QuadTree(new AABB(width/2, height/2, width/2, height/2), 5);
+  qt = new QuadTree(new AABB(width/2, height/2, width/2, height/2), 50);
 
   for (int i = 0; i<plist.length; i++ ) {
 
@@ -93,6 +94,7 @@ void collisionCheck() {
       if (p1.iscolliding(p2)) {
         p1.colliding = true;
         p2.colliding = true;
+        break;
       }
     }
   }
